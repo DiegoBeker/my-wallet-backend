@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import joi from "joi";
 import { signIn, signUp } from "./controllers/authController.js";
-import { postTransaction } from "./controllers/transactionController.js";
+import { getTransactions, postTransaction } from "./controllers/transactionController.js";
 
 //config
 const app = express();
@@ -43,7 +43,8 @@ export const transactionSchema = joi.object({
 //endpoints
 app.post("/sign-up", signUp);
 app.post("/sign-in", signIn);
-app.post("/transaction", postTransaction);
+app.post("/transactions", postTransaction);
+app.get("/transactions", getTransactions);
 
 const PORT = 5000;
 app.listen(PORT, () => console.log("Servidor rodando na porta 5000"));
