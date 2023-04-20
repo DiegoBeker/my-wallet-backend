@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { MongoClient } from "mongodb";
 import joi from "joi";
-import { signUp } from "./controllers/authController.js";
+import { signIn, signUp } from "./controllers/authController.js";
 
 //config
 const app = express();
@@ -25,11 +25,17 @@ export const db = mongoClient.db();
 export const signupSchema = joi.object({
   name: joi.string().required(),
   email: joi.string().email().required(),
-  password: joi.string().min(3).required()
+  password: joi.string().min(3).required(),
+});
+
+export const signInSchema = joi.object({
+  email: joi.string().email().required(),
+  password: joi.string().min(3).required(),
 });
 
 //endpoints
-app.post("/sign-up", signUp);
+app.post('/sign-up', signUp);
+app.post('/sign-in', signIn);
 
 const PORT = 5000;
 app.listen(PORT, () => console.log("Servidor rodando na porta 5000"));
