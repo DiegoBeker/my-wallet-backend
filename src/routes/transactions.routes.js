@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  deleteTransaction,
   getTransactions,
   postTransaction,
 } from "../controllers/transactionController.js";
@@ -16,5 +17,6 @@ transactionsRouter.post(
   postTransaction
 );
 transactionsRouter.get("/transactions", authValitaditon, getTransactions);
+transactionsRouter.delete("/transactions/:id", authValitaditon, deleteTransaction)
 
 export default transactionsRouter;
