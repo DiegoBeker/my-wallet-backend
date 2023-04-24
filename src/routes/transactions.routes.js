@@ -3,6 +3,7 @@ import {
   deleteTransaction,
   getTransactions,
   postTransaction,
+  updateTransaction,
 } from "../controllers/transactionController.js";
 import { authValitaditon } from "../middlewares/auth.middleware.js";
 import { validateSchema } from "../middlewares/validateSchema.middleware.js";
@@ -17,6 +18,16 @@ transactionsRouter.post(
   postTransaction
 );
 transactionsRouter.get("/transactions", authValitaditon, getTransactions);
-transactionsRouter.delete("/transactions/:id", authValitaditon, deleteTransaction)
+transactionsRouter.delete(
+  "/transactions/:id",
+  authValitaditon,
+  deleteTransaction
+);
+transactionsRouter.put(
+  "/transactions/:id",
+  authValitaditon,
+  validateSchema(transactionSchema),
+  updateTransaction
+);
 
 export default transactionsRouter;

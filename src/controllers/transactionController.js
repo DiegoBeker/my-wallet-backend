@@ -52,3 +52,24 @@ export async function deleteTransaction(req, res) {
     res.status(500).send(error);
   }
 }
+
+export async function updateTransaction(req, res) {
+  const { value, description } = req.body;
+  const { id } = req.params;
+  const valueNumber = Number(value).toFixed(2);
+
+  try {
+    const editTransaction = await db
+      .collection("transactions")
+      .updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { value: valueNumber, description: description } }
+      );
+
+    if (editTransaction.matchedCount === 0) return res.sendStatus(404);
+
+    res.sendStatus(202);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
