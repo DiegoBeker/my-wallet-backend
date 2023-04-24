@@ -1,8 +1,7 @@
 import { db } from "../database/database.connection.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
-import { signInSchema } from "../schemas/signIn.shema.js";
-import { signUpSchema } from "../schemas/signUp.schema.js";
+
 
 export async function signUp(req, res) {
   const { name, email, password } = req.body;
@@ -39,7 +38,7 @@ export async function signIn(req, res) {
       .collection("sessions")
       .insertOne({ idUser: user._id, token: token });
 
-    res.status(200).send(token);
+    res.status(200).send({token, name: user.name});
   } catch (error) {
     res.status(500).send(error.message);
   }
