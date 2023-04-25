@@ -1,7 +1,7 @@
 import { db } from "../database/database.connection.js";
 import bcrypt from "bcrypt";
+import { stripHtml } from "string-strip-html";
 import { v4 as uuid } from "uuid";
-
 
 export async function signUp(req, res) {
   const { name, email, password } = req.body;
@@ -14,7 +14,7 @@ export async function signUp(req, res) {
 
     await db
       .collection("users")
-      .insertOne({ name: name, email: email, password: hash });
+      .insertOne({ name: stripHtml(name).result.trim(), email: stripHtml(email).result.trim(), password: hash });
 
     res.status(201).send("Conta criada com sucesso!");
   } catch (error) {
